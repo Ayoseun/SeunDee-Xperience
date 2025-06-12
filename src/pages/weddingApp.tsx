@@ -1,7 +1,9 @@
-import  { useState } from 'react';
-import { Camera, Heart,  Wallet, User, Upload, Star, Zap, Activity, Calendar, Users, QrCode,  Clock, Stethoscope, Plus, Minus,  MessageSquare,  Moon, Sun } from 'lucide-react';
+import { useState } from 'react';
+import { Camera, Heart, Wallet, User, Upload, Star, Zap, Activity, Calendar, Users, QrCode, Clock, Stethoscope, Plus, Minus, MessageSquare, Moon, Sun } from 'lucide-react';
 import usImage from '../assets/Us.jpeg';
-
+import DeeImage from '../assets/Dee.jpeg';
+import AeeImage from '../assets/Aee.jpeg';
+import weddingRingsImage from '../assets/ring.png';
 const WeddingApp = () => {
   const [activeTab, setActiveTab] = useState('welcome');
   const [darkMode, setDarkMode] = useState(false);
@@ -13,13 +15,13 @@ const WeddingApp = () => {
   const [userName, setUserName] = useState('');
 
   const coupleData = {
-    bride: { name: "Deborah Essien", profession: "Registered Nurse", avatar: "👩‍⚕️" },
-    groom: { name: "Solomon Ayo", profession: "Blockchain Engineer", avatar: "👨‍💻" },
+    bride: { name: "Deborah Essien", profession: "Registered Nurse", avatar: DeeImage },
+    groom: { name: "Solomon Ayo", profession: "Blockchain Engineer", avatar: AeeImage },
     weddingDate: "September 30, 2025",
     venue: "VIP Pavillion, Igando, Lagos"
   };
 
-  const navigateTo = (tabId:any) => {
+  const navigateTo = (tabId: any) => {
     setActiveTab(tabId);
   };
 
@@ -37,7 +39,7 @@ const WeddingApp = () => {
     }, 1000);
   };
 
-  const handleNameSubmit = (e:any) => {
+  const handleNameSubmit = (e: any) => {
     e.preventDefault();
     if (userName.trim()) {
       setRsvpCount(79);
@@ -51,7 +53,7 @@ const WeddingApp = () => {
   const borderClass = darkMode ? 'border-gray-700/50' : 'border-gray-200/50';
 
   const WelcomeScreen = () => (
-    <div className={`flex items-center justify-center h-screen ${bgClass}`} style={{  backgroundImage: `url(${usImage})`, backgroundSize: 'cover', backgroundPosition: 'center', }}>
+    <div className={`flex items-center justify-center h-screen ${bgClass}`} style={{ backgroundImage: `url(${usImage})`, backgroundSize: 'cover', backgroundPosition: 'center', }}>
       <div className="absolute inset-0 bg-black/50 backdrop-blur-xs"></div>
       <div className="relative z-10 text-center p-6 rounded-lg max-w-md w-full">
         <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">SEUNDEE XPERIENCE</h1>
@@ -75,7 +77,7 @@ const WeddingApp = () => {
     </div>
   );
 
-  const VitalCard = ({ title, value, unit, icon: Icon, trend, color = "green" }:any) => (
+  const VitalCard = ({ title, value, unit, icon: Icon, trend, color = "green" }: any) => (
     <div className={`${cardBgClass} backdrop-blur-sm rounded-xl p-4 border ${borderClass} shadow-sm hover:shadow-md transition-all`}>
       <div className="flex items-center justify-between mb-2">
         <Icon className={`w-5 h-5 text-${color}-600`} />
@@ -88,7 +90,7 @@ const WeddingApp = () => {
     </div>
   );
 
-  const BlockchainTx = ({ type, amount, hash, status }:any) => (
+  const BlockchainTx = ({ type, amount, hash, status }: any) => (
     <div className="bg-gradient-to-r from-gray-900 to-gray-800 rounded-lg p-3 text-white mb-2">
       <div className="flex justify-between items-start mb-2">
         <div className="flex items-center space-x-2">
@@ -102,7 +104,7 @@ const WeddingApp = () => {
     </div>
   );
 
-  const TokenReward = ({ show, amount }:any) => (
+  const TokenReward = ({ show, amount }: any) => (
     <div className={`fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 transition-all duration-500 ${show ? 'scale-100 opacity-100' : 'scale-50 opacity-0'}`}>
       <div className="bg-gradient-to-r from-gold-400 to-gold-600 text-white px-8 py-4 rounded-2xl shadow-2xl flex items-center space-x-3">
         <Star className="w-6 h-6 animate-spin" />
@@ -121,8 +123,8 @@ const WeddingApp = () => {
         <div className="flex items-center space-x-3">
           <div>
             <h1 className={`text-lg md:text-xl font-bold ${textClass}`}>
-             💕 {userName}
-           
+              💕 {userName}
+
             </h1>
           </div>
         </div>
@@ -158,9 +160,20 @@ const WeddingApp = () => {
         <div className={`${cardBgClass} backdrop-blur-sm rounded-2xl p-6 mb-6 shadow-lg border ${borderClass}`}>
           <div className="text-center mb-4">
             <div className="flex justify-center items-center space-x-4 mb-3">
-              <div className="text-6xl">{coupleData.bride.avatar}</div>
-              <div className="text-4xl animate-pulse">💕</div>
-              <div className="text-6xl">{coupleData.groom.avatar}</div>
+              <div className="flex items-center gap-4">
+                <img
+                  src={coupleData.bride.avatar}
+                  alt="Bride"
+                  className="w-24 h-24 object-cover rounded-b-full"
+                />
+                <div className="text-4xl animate-pulse">💕</div>
+                <img
+                  src={coupleData.groom.avatar}
+                  alt="Groom"
+                  className="w-24 h-24 object-cover rounded-b-full"
+                />
+              </div>
+
             </div>
             <h1 className="text-2xl font-bold bg-gradient-to-r from-rose-600 to-purple-600 bg-clip-text text-transparent">
               {coupleData.bride.name.split(' ')[0]} & {coupleData.groom.name.split(' ')[0]}
@@ -172,15 +185,19 @@ const WeddingApp = () => {
             </div>
           </div>
 
-          <div className={`${darkMode ? 'bg-gradient-to-r from-purple-900/50 to-rose-900/50 border-l-4 border-purple-400' : 'bg-gradient-to-r from-purple-100 to-rose-100 border-l-4 border-purple-500'} rounded-xl p-4`}>
-            <h3 className={`font-bold ${darkMode ? 'text-purple-300' : 'text-purple-900'} mb-2 flex items-center`}>
-              <Heart className="w-4 h-4 mr-2" />
+          <div className={`${darkMode ? 'bg-gradient-to-r from-purple-900/50 to-rose-900/50 border-l-4 border-purple-400' : 'bg-gradient-to-r from-rose-500 to-pink-600 rounded-xl p-4 mb-6 text-white shadow-lg'} rounded-xl p-4`}>
+            <h3 className={`font-bold ${darkMode ? 'text-white' : 'text-white'} mb-2 flex items-center`}>
+              <img
+                  src={weddingRingsImage}
+                  alt="rings"
+                  className="w-8 h-8 mr-2 object-cover rounded-b-full"
+                />
               Smart Contract Vows
             </h3>
-            <div className={`space-y-1 text-sm ${darkMode ? 'text-purple-200' : 'text-purple-800'}`}>
-              <div>• Promise to share dessert: <span className={`font-mono ${darkMode ? 'bg-gray-700' : 'bg-white'} px-2 py-1 rounded`}>FOREVER</span></div>
-              <div>• Late night snack provision: <span className={`font-mono ${darkMode ? 'bg-gray-700' : 'bg-white'} px-2 py-1 rounded`}>IMMUTABLE</span></div>
-              <div>• Love token supply: <span className={`font-mono ${darkMode ? 'bg-gray-700' : 'bg-white'} px-2 py-1 rounded`}>UNLIMITED</span></div>
+            <div className={`space-y-1 text-sm ${darkMode ? 'text-purple-200' : 'text-white'}`}>
+              <div>• Promise to share dessert: <span className={`font-mono ${darkMode ? 'bg-gray-700' : 'bg-white'} px-2 py-1 rounded text-black`}>FOREVER</span></div>
+              <div>• Late night snack provision: <span className={`font-mono ${darkMode ? 'bg-gray-700' : 'bg-white'} px-2 py-1 rounded text-black`}>IMMUTABLE</span></div>
+              <div>• Love token supply: <span className={`font-mono ${darkMode ? 'bg-gray-700' : 'bg-white'} px-2 py-1 rounded text-black`}>UNLIMITED</span></div>
             </div>
           </div>
         </div>
@@ -188,7 +205,7 @@ const WeddingApp = () => {
         <div className={`${cardBgClass} backdrop-blur-sm rounded-2xl p-6 mb-6 shadow-lg`}>
           <div className="flex items-center mb-4">
             <Stethoscope className="w-5 h-5 text-emerald-600 mr-2" />
-            <h2 className={`text-lg font-bold ${textClass}`}>Wedding Vital Signs</h2>
+            <h2 className={`text-sm font-bold text-black`}>Wedding Vital Signs</h2>
             <div className="ml-auto bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-xs font-medium">
               All Systems Normal
             </div>
@@ -366,11 +383,10 @@ const WeddingApp = () => {
                   <span className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'} font-mono`}>{reward.cost} LOVE</span>
                   <button
                     disabled={!reward.available}
-                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                      reward.available
+                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${reward.available
                         ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:shadow-lg'
                         : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                    }`}
+                      }`}
                   >
                     {reward.available ? 'Redeem' : 'Insufficient'}
                   </button>
@@ -434,11 +450,10 @@ const WeddingApp = () => {
           <button
             onClick={handlePhotoCapture}
             disabled={isCapturing}
-            className={`w-20 h-20 rounded-full shadow-xl transition-all duration-200 ${
-              isCapturing
+            className={`w-20 h-20 rounded-full shadow-xl transition-all duration-200 ${isCapturing
                 ? 'bg-gradient-to-r from-rose-500 to-pink-600 scale-95'
                 : 'bg-gradient-to-r from-rose-600 to-pink-600 hover:scale-105'
-            }`}
+              }`}
           >
             <div className="w-16 h-16 bg-white rounded-full mx-auto flex items-center justify-center">
               <Camera className={`w-8 h-8 text-gray-700 ${isCapturing ? 'animate-pulse' : ''}`} />
@@ -502,7 +517,7 @@ const WeddingApp = () => {
   );
 
   const renderContent = () => {
-    switch(activeTab) {
+    switch (activeTab) {
       case 'home': return <HomeInterface />;
       case 'rsvp': return <RSVPInterface />;
       case 'camera': return <CameraInterface />;
@@ -525,7 +540,7 @@ const WeddingApp = () => {
         </div>
 
         {activeTab !== 'welcome' && (
-          <div className={`${darkMode ? 'bg-black/95 border-gray-700/50' : 'bg-white/95 border-gray-200/50'} backdrop-blur-sm border-t px-4 md:px-6 py-3 sticky bottom-0`}>
+          <div className={`${darkMode ? 'bg-black/95 border-gray-700/50' : 'bg-[#f2e9c2]/95 border-gray-200/50'} backdrop-blur-sm border-t px-4 md:px-6 py-3 sticky bottom-0`}>
             <div className="flex items-center justify-around">
               {[
                 { id: 'home', icon: Heart, label: 'Love', color: 'rose' },
@@ -537,11 +552,10 @@ const WeddingApp = () => {
                 <button
                   key={id}
                   onClick={() => navigateTo(id)}
-                  className={`flex flex-col items-center space-y-1 py-2 px-3 rounded-lg transition-all ${
-                    activeTab === id
+                  className={`flex flex-col items-center space-y-1 py-2 px-3 rounded-lg transition-all ${activeTab === id
                       ? `bg-gradient-to-r from-${color}-500 to-${color}-600 text-white shadow-lg transform scale-105`
                       : `${darkMode ? 'text-gray-400 hover:text-white' : 'text-gray-600 hover:text-gray-900'} hover:bg-${color}-50 ${darkMode ? 'hover:bg-gray-800' : ''}`
-                  }`}
+                    }`}
                 >
                   <Icon className="w-5 h-5" />
                   <span className="text-xs font-medium">{label}</span>
