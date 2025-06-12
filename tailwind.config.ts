@@ -5,7 +5,15 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        'nunito': ['Nunito', 'sans-serif'],
+      },
+      colors: {
+        primary: '#777723',
+        secondary: '#762544',
+        tertiary: '#C4C4C4',
+    },
   },
   plugins: [],
 }

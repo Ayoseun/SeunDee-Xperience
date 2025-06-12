@@ -1,5 +1,6 @@
 import  { useState } from 'react';
 import { Camera, Heart,  Wallet, User, Upload, Star, Zap, Activity, Calendar, Users, QrCode,  Clock, Stethoscope, Plus, Minus,  MessageSquare,  Moon, Sun } from 'lucide-react';
+import usImage from '../assets/Us.jpeg';
 
 const WeddingApp = () => {
   const [activeTab, setActiveTab] = useState('welcome');
@@ -44,14 +45,14 @@ const WeddingApp = () => {
     }
   };
 
-  const bgClass = darkMode ? 'bg-black' : 'bg-olive-50';
-  const textClass = darkMode ? 'text-white' : 'text-black';
+  const bgClass = darkMode ? 'bg-black' : 'bg-white/50';
+  const textClass = darkMode ? 'text-white' : 'text-white';
   const cardBgClass = darkMode ? 'bg-gray-800/80' : 'bg-white/80';
   const borderClass = darkMode ? 'border-gray-700/50' : 'border-gray-200/50';
 
   const WelcomeScreen = () => (
-    <div className={`flex items-center justify-center h-screen ${bgClass}`} style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1519225421980-715cb0215aed)', backgroundSize: 'cover' }}>
-      <div className="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+    <div className={`flex items-center justify-center h-screen ${bgClass}`} style={{  backgroundImage: `url(${usImage})`, backgroundSize: 'cover', backgroundPosition: 'center', }}>
+      <div className="absolute inset-0 bg-black/50 backdrop-blur-xs"></div>
       <div className="relative z-10 text-center p-6 rounded-lg max-w-md w-full">
         <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">SEUNDEE XPERIENCE</h1>
         <p className="text-xl md:text-2xl text-white mb-8">Come celebrate our joy</p>
@@ -115,7 +116,7 @@ const WeddingApp = () => {
   );
 
   const Header = () => (
-    <div className={`${darkMode ? 'bg-black/95' : 'bg-olive-50/95'} backdrop-blur-sm border-b ${borderClass} px-4 md:px-6 py-4 sticky top-0 z-20`}>
+    <div className={`${darkMode ? 'bg-black/95' : 'bg-[#777723]'} backdrop-blur-sm border-b ${borderClass} px-4 md:px-6 py-4 sticky top-0 z-20`}>
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-3">
           <div>
@@ -133,7 +134,7 @@ const WeddingApp = () => {
           >
             {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
           </button>
-          <div className="bg-gradient-to-r from-green-500 to-green-600 rounded-full px-3 py-1 shadow-sm">
+          <div className="bg-gradient-to-r from-green-500 to-[green-900] rounded-full px-3 py-1 shadow-sm">
             <div className="flex items-center space-x-1 text-white">
               <Star className="w-4 h-4" />
               <span className="font-bold text-sm md:text-base">{tokens}</span>
@@ -145,7 +146,7 @@ const WeddingApp = () => {
   );
 
   const HomeInterface = () => (
-    <div className={`flex-1 ${darkMode ? 'bg-gradient-to-br from-gray-900 to-purple-900' : 'bg-gradient-to-br from-rose-50 to-purple-50'} relative overflow-y-auto`}>
+    <div className={`flex-1 ${darkMode ? 'bg-gradient-to-br from-gray-900 to-purple-900' : 'bg-gradient-to-br from-[##fffae5] to-[#f2e9c2]'} relative overflow-y-auto`}>
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-10 left-10 text-6xl animate-pulse">💕</div>
         <div className="absolute top-40 right-16 text-4xl animate-bounce">✨</div>
