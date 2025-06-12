@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Camera, Heart, Wallet, User, Upload, Star, Zap, Activity, Calendar, Users, QrCode, Clock, Stethoscope, Plus, Minus, MessageSquare, Moon, Sun } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { Camera, Heart, Wallet, User, Star, Zap, Activity, Calendar, Users, QrCode, Clock, Stethoscope, Plus, Minus, Moon, Sun } from 'lucide-react';
 import usImage from '../assets/Us.jpeg';
 import DeeImage from '../assets/Dee.jpeg';
 import AeeImage from '../assets/Aee.jpeg';
@@ -13,6 +13,15 @@ const WeddingApp = () => {
   const [rsvpCount, setRsvpCount] = useState(78);
   const [guestCount, setGuestCount] = useState(2);
   const [userName, setUserName] = useState('');
+    const [isCameraActive, setIsCameraActive] = useState(false);
+  const [isRecording, setIsRecording] = useState(false);
+  const [capturedImage, setCapturedImage] = useState<string | null>(null);
+  const [recordedVideo, setRecordedVideo] = useState<string | null>(null);
+
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const recordedChunksRef = useRef<Blob[]>([]);
 
   const coupleData = {
     bride: { name: "Deborah Essien", profession: "Registered Nurse", avatar: DeeImage },
@@ -29,15 +38,109 @@ const WeddingApp = () => {
     setDarkMode(!darkMode);
   };
 
+  // Toggle camera on/off
+  const toggleCamera = async () => {
+    if (!isCameraActive) {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: 'environment' },
+          audio: false
+        });
+
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream;
+          setIsCameraActive(true);
+        }
+      } catch (err) {
+        console.error("Error accessing camera:", err);
+        alert("Could not access the camera. Please check permissions.");
+      }
+    } else {
+      if (videoRef.current?.srcObject) {
+        const stream = videoRef.current.srcObject as MediaStream;
+        stream.getTracks().forEach(track => track.stop());
+        setIsCameraActive(false);
+      }
+    }
+  };
+
+  // Capture photo
   const handlePhotoCapture = () => {
+    if (!isCameraActive || !videoRef.current || !canvasRef.current) {
+      alert("Please turn on the camera first!");
+      return;
+    }
+
     setIsCapturing(true);
     setTimeout(() => {
       setIsCapturing(false);
       setRecentPhoto(true);
       setTokens(prev => prev + 25);
       setTimeout(() => setRecentPhoto(false), 2000);
+
+      const video = videoRef.current;
+      const canvas = canvasRef.current;
+
+      // Set canvas dimensions to match video
+      canvas!.width = video!.videoWidth;
+      canvas!.height = video!.videoHeight;
+
+      const context = canvas!.getContext('2d');
+      if (context) {
+        context.drawImage(video!, 0, 0, canvas!.width, canvas!.height);
+        const imageData = canvas!.toDataURL('image/png');
+        setCapturedImage(imageData);
+      }
     }, 1000);
   };
+
+  // Toggle video recording
+  const toggleRecording = () => {
+    if (!isCameraActive || !videoRef.current?.srcObject) {
+      alert("Please turn on the camera first!");
+      return;
+    }
+
+    if (!isRecording) {
+      // Start recording
+      const stream = videoRef.current.srcObject as MediaStream;
+      recordedChunksRef.current = [];
+
+      const options = { mimeType: 'video/webm' };
+      mediaRecorderRef.current = new MediaRecorder(stream, options);
+
+      mediaRecorderRef.current.ondataavailable = (e) => {
+        if (e.data.size > 0) {
+          recordedChunksRef.current.push(e.data);
+        }
+      };
+
+      mediaRecorderRef.current.onstop = () => {
+        const blob = new Blob(recordedChunksRef.current, { type: 'video/webm' });
+        const videoUrl = URL.createObjectURL(blob);
+        setRecordedVideo(videoUrl);
+        setTokens(prev => prev + 50); // More tokens for video
+      };
+
+      mediaRecorderRef.current.start(100); // Collect data every 100ms
+      setIsRecording(true);
+    } else {
+      // Stop recording
+      if (mediaRecorderRef.current) {
+        mediaRecorderRef.current.stop();
+        setIsRecording(false);
+      }
+    }
+  };
+  // Clean up media recorder when component unmounts
+  useEffect(() => {
+    return () => {
+      if (mediaRecorderRef.current && isRecording) {
+        mediaRecorderRef.current.stop();
+      }
+    };
+  }, []);
+ 
 
   const handleNameSubmit = (e: any) => {
     e.preventDefault();
@@ -399,7 +502,7 @@ const WeddingApp = () => {
     </div>
   );
 
-  const CameraInterface = () => (
+const CameraInterface = () => (
     <div className={`flex-1 ${darkMode ? 'bg-gradient-to-br from-gray-900 to-purple-900' : 'bg-gradient-to-br from-purple-50 to-pink-50'} relative overflow-y-auto`}>
       <div className="absolute inset-0 bg-gradient-to-br from-black/10 to-transparent"></div>
 
@@ -424,17 +527,28 @@ const WeddingApp = () => {
         </div>
 
         <div className="relative mb-6 aspect-square bg-gray-900 rounded-2xl overflow-hidden shadow-xl">
-          <div className="absolute inset-0 bg-gradient-to-br from-rose-900 to-purple-900 flex items-center justify-center">
-            <div className="text-center text-white">
-              <Camera className="w-16 h-16 mx-auto mb-4 opacity-50" />
-              <p className="text-lg font-medium">Capture Love Moments</p>
-              <p className="text-sm opacity-75">Earn LOVE tokens instantly</p>
+          <video
+            ref={videoRef}
+            autoPlay
+            playsInline
+            muted
+            className={`w-full h-full object-cover ${!isCameraActive ? 'hidden' : ''}`}
+          ></video>
+          <canvas ref={canvasRef} className="hidden"></canvas>
+
+          {!isCameraActive && (
+            <div className="absolute inset-0 bg-gradient-to-br from-rose-900 to-purple-900 flex items-center justify-center">
+              <div className="text-center text-white">
+                <Camera className="w-16 h-16 mx-auto mb-4 opacity-50" />
+                <p className="text-lg font-medium">Capture Love Moments</p>
+                <p className="text-sm opacity-75">Earn LOVE tokens instantly</p>
+              </div>
             </div>
-          </div>
+          )}
 
           <div className="absolute top-4 left-4 right-4 flex justify-between">
             <div className="bg-black/50 rounded-full p-2">
-              <Heart className="w-4 h-4 text-rose-400" />
+              <Heart className={`w-4 h-4 ${isCameraActive ? 'text-rose-400 animate-pulse' : 'text-gray-400'}`} />
             </div>
             <div className="bg-black/50 rounded-full px-3 py-1">
               <span className="text-white text-xs font-medium">LOVE MODE</span>
@@ -443,13 +557,16 @@ const WeddingApp = () => {
         </div>
 
         <div className="flex items-center justify-center space-x-8">
-          <button className={`w-12 h-12 ${cardBgClass} backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg`}>
-            <Upload className={`w-6 h-6 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`} />
+          <button
+            onClick={toggleCamera}
+            className={`w-12 h-12 ${cardBgClass} backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg transition-all ${isCameraActive ? 'ring-2 ring-rose-500' : ''}`}
+          >
+            <Heart className={`w-6 h-6 ${isCameraActive ? 'text-rose-500 animate-pulse' : 'text-gray-400'}`} />
           </button>
 
           <button
             onClick={handlePhotoCapture}
-            disabled={isCapturing}
+            disabled={isCapturing || !isCameraActive}
             className={`w-20 h-20 rounded-full shadow-xl transition-all duration-200 ${isCapturing
                 ? 'bg-gradient-to-r from-rose-500 to-pink-600 scale-95'
                 : 'bg-gradient-to-r from-rose-600 to-pink-600 hover:scale-105'
@@ -460,10 +577,36 @@ const WeddingApp = () => {
             </div>
           </button>
 
-          <button className={`w-12 h-12 ${cardBgClass} backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg`}>
-            <MessageSquare className={`w-6 h-6 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`} />
+          <button
+            onClick={toggleRecording}
+            disabled={!isCameraActive}
+            className={`w-12 h-12 ${cardBgClass} backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg transition-all ${isRecording ? 'ring-2 ring-purple-500' : ''}`}
+          >
+            <div className={`w-6 h-6 rounded-full ${isRecording ? 'bg-red-500 animate-pulse' : 'bg-gray-400'}`}></div>
           </button>
         </div>
+
+        {capturedImage && (
+          <div className="mt-6">
+            <h3 className={`text-lg font-bold ${textClass} mb-2`}>Captured Memory</h3>
+            <img
+              src={capturedImage}
+              alt="Captured"
+              className="w-full rounded-lg shadow-lg mb-4"
+            />
+          </div>
+        )}
+
+        {recordedVideo && (
+          <div className="mt-6">
+            <h3 className={`text-lg font-bold ${textClass} mb-2`}>Recorded Memory</h3>
+            <video
+              src={recordedVideo}
+              controls
+              className="w-full rounded-lg shadow-lg"
+            />
+          </div>
+        )}
       </div>
     </div>
   );
@@ -565,6 +708,9 @@ const WeddingApp = () => {
           </div>
         )}
       </div>
+       {/* Hidden video element for camera functionality */}
+      <video ref={videoRef} className="hidden" />
+      <canvas ref={canvasRef} className="hidden" />
     </div>
   );
 };
