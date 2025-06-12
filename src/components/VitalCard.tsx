@@ -1,6 +1,7 @@
 interface VitalCardProps {
   title: string;
   value: string | number;
+  
   unit: string;
   icon: React.ComponentType<{ className?: string }>;
   trend: string;

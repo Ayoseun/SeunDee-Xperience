@@ -13,9 +13,11 @@ const HomePage = ({darkMode,setDarkMode}:any) => {
   
   const [tokens, setTokens] = useState(250);
   const [userName] = useState('Guest');
-  const [rsvpCount] = useState(78);
+  const [rsvpCount] = useState(0);
   const [showConfetti, setShowConfetti] = useState(true);
+ const [countdown, setCountdown] = useState('');
 
+  const targetDate:any = new Date('2025-09-20T00:00:00');
 
   const coupleData = {
     bride: { name: "Deborah Essien", profession: "Registered Nurse", avatar: DeeImage },
@@ -28,6 +30,30 @@ const HomePage = ({darkMode,setDarkMode}:any) => {
   const textClass = darkMode ? 'text-white' : 'text-white';
   const cardBgClass = darkMode ? 'bg-gray-800/80' : 'bg-white/80';
   const borderClass = darkMode ? 'border-gray-700/50' : 'border-gray-200/50';
+
+    useEffect(() => {
+    const updateCountdown = () => {
+      const now:any = new Date();
+      const diff = targetDate - now;
+
+      if (diff <= 0) {
+        setCountdown('0 days, 0 hrs, 0 mins');
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+
+      setCountdown(`${days}days ,${hours}h,${minutes}m`);
+    };
+
+    updateCountdown(); // initial call
+
+    const timer = setInterval(updateCountdown, 60 * 1000); // update every minute
+
+    return () => clearInterval(timer);
+  }, []);
  // Auto-hide confetti after a few seconds (optional)
   useEffect(() => {
     const timer = setTimeout(() => setShowConfetti(false), 5000);
@@ -106,7 +132,7 @@ const HomePage = ({darkMode,setDarkMode}:any) => {
               <VitalCard title="RSVP Rate ❤️" value={rsvpCount} unit="/300" icon={Users} trend="up" color="emerald" />
               <VitalCard title="Love Pressure 💕" value="120" unit="/80" icon={Activity} trend="stable" color="rose" />
               <VitalCard title="Excitement Level ⚡" value="98" unit="%" icon={Zap} trend="up" color="purple" />
-              <VitalCard title="Days to Bliss 📅" value="3" unit=" days" icon={Calendar} trend="down" color="amber" />
+              <VitalCard title="Days to Bliss 📅"  value={countdown}  unit="" icon={Calendar} trend="down" color="amber" />
             </div>
           </div>
 
