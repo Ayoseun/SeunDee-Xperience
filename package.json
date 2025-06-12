@@ -1,0 +1,52 @@
+{
+  "name": "seundee-xperience",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@coral-xyz/anchor": "^0.31.1",
+    "@okx-dex/okx-dex-sdk": "^1.0.13",
+    "@solana/spl-token": "^0.4.13",
+    "@solana/wallet-adapter-react-ui": "^0.9.38",
+    "@solana/web3.js": "^1.98.2",
+    "@tailwindcss/postcss": "^4.1.10",
+    "@tailwindcss/vite": "^4.1.10",
+    "bs58": "^6.0.0",
+    "buffer": "^6.0.3",
+    "crypto-js": "^4.2.0",
+    "framer-motion": "^12.15.0",
+    "lucide-react": "^0.514.0",
+    "okx-api": "^2.0.5",
+    "querystring": "^0.2.1",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-hot-toast": "^2.5.2",
+    "react-router-dom": "^7.6.1",
+    "recharts": "^2.15.3",
+    "sweetalert2": "^11.22.0",
+    "vite-plugin-node-polyfills": "^0.23.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.25.0",
+    "@types/bs58": "^5.0.0",
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+    "@vitejs/plugin-react": "^4.4.1",
+    "autoprefixer": "^10.4.21",
+    "eslint": "^9.25.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.19",
+    "globals": "^16.0.0",
+    "postcss": "^8.5.5",
+    "tailwindcss": "^4.1.10",
+    "typescript": "~5.8.3",
+    "typescript-eslint": "^8.30.1",
+    "vite": "^6.3.5"
+  }
+}
