@@ -1,16 +1,14 @@
 
+import { BrowserRouter as Router,  } from 'react-router-dom';
+import WeddingApp from './pages/weddingApp';
 
-import './App.css'
-import Home from './pages/home'
 
 function App() {
- 
-
   return (
-    <>
-    <Home />
-    </>
-  )
+    <Router>
+      <WeddingApp />
+    </Router>
+  );
 }
 
-export default App
+export default App;
