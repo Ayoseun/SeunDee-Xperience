@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Wallet, Star } from 'lucide-react';
+
 import Header from '../components/Header';
 import BlockchainTx from '../components/BlockchainTx';
 import BottomNavigation from '../components/NavBar';

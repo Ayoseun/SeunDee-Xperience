@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
-import RSVPPage from './pages/RsvpPage'
+import RSVPPage from './pages/RSVPPage'
 import CameraPage from './pages/CameraPage';
 import BlockchainPage from './pages/BlockchainPage';
 import GalleryPage from './pages/GalleryPage';

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Camera, User } from 'lucide-react';
+import { Camera } from 'lucide-react';
 import Header from '../components/Header';
 import BottomNavigation from '../components/NavBar';
 

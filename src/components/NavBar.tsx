@@ -1,4 +1,4 @@
-import { Heart, Users, Camera, Wallet, User,GalleryVertical } from 'lucide-react';
+import { Heart, Users, Camera, Wallet, GalleryVertical } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 interface BottomNavigationProps {

@@ -20,10 +20,7 @@ const CameraPage = ({darkMode,setDarkMode}:any) => {
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const recordedChunksRef = useRef<Blob[]>([]);
 
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-  };
-
+ 
   const toggleCamera = async () => {
     if (!isCameraActive) {
       try {
