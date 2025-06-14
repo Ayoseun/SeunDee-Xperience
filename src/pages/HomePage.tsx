@@ -30,7 +30,7 @@ const HomePage = ({darkMode,setDarkMode}:any) => {
   const coupleData = {
     bride: { name: "Deborah Essien", profession: "Registered Nurse", avatar: DeeImage },
     groom: { name: "Solomon Ayo", profession: "Blockchain Engineer", avatar: AeeImage },
-    weddingDate: "September 30, 2025",
+    weddingDate: "September 20, 2025",
     venue: "VIP Pavillion, Igando, Lagos"
   };
 
