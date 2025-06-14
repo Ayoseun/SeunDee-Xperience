@@ -39,6 +39,7 @@ const Header = ({ setDarkMode, darkMode, tokens, userName }: HeaderProps) => {
   ];
 
   useEffect(() => {
+    
     const interval = setInterval(() => {
       setCurrentMessageIndex(prev => {
         if (prev === -1) {
@@ -85,7 +86,7 @@ const Header = ({ setDarkMode, darkMode, tokens, userName }: HeaderProps) => {
             <div className="flex items-center space-x-3 animate-fade-in">
               <div>
                 <h1 className={`text-lg md:text-xl font-bold ${textClass}`}>
-                  💕 {userName}
+                  💕 {userName.trim()}
                 </h1>
               </div>
             </div>

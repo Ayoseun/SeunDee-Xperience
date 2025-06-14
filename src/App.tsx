@@ -9,21 +9,34 @@ import { useState } from 'react';
 
 const App = () => {
   const [darkMode, setDarkMode] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [name, setName] = useState('');
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<WelcomeScreen />} />
-        <Route path="/home" element={<HomePage darkMode={darkMode}
-          setDarkMode={setDarkMode} />} />
-        <Route path="/rsvp" element={<RSVPPage 
-        darkMode={darkMode}
-          setDarkMode={setDarkMode} />} />
+        <Route path="/" element={<WelcomeScreen setPhoneNumber={setPhoneNumber}
+          setName={setName}
+          name={name}
+          phone={phoneNumber}
+        />} />
+        <Route path="/home" element={<HomePage
+          darkMode={darkMode}
+          setDarkMode={setDarkMode}
+          name={name} />} />
+        <Route path="/rsvp" element={<RSVPPage
+          darkMode={darkMode}
+          setDarkMode={setDarkMode}
+          name={name} />} />
         <Route path="/camera" element={<CameraPage darkMode={darkMode}
-          setDarkMode={setDarkMode} />} />
+          setDarkMode={setDarkMode}
+          name={name} />} />
         <Route path="/blockchain" element={<BlockchainPage darkMode={darkMode}
-          setDarkMode={setDarkMode} />} />
+          setDarkMode={setDarkMode}
+          phoneNumber={phoneNumber} 
+          name={name} />} />
         <Route path="/gallery" element={<GalleryPage darkMode={darkMode}
-          setDarkMode={setDarkMode} />} />
+          setDarkMode={setDarkMode}
+          name={name} />} />
       </Routes>
     </Router>
   );

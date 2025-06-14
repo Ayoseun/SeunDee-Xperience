@@ -3,10 +3,9 @@ import { Users, Plus, Minus, QrCode } from 'lucide-react';
 import Header from '../components/Header';
 import BottomNavigation from '../components/NavBar';
 
-const RSVPPage = ({darkMode,setDarkMode}:any) => {
+const RSVPPage = ({darkMode,setDarkMode,name}:any) => {
 
   const [tokens] = useState(250);
-  const [userName] = useState('Guest');
   const [rsvpCount] = useState(78);
   const [guestCount, setGuestCount] = useState(2);
 
@@ -18,7 +17,7 @@ const RSVPPage = ({darkMode,setDarkMode}:any) => {
 
   return (
     <div className={`max-w-md mx-auto ${bgClass} min-h-screen`}>
-      <Header darkMode={darkMode} setDarkMode={setDarkMode} tokens={tokens} userName={userName} />
+      <Header darkMode={darkMode} setDarkMode={setDarkMode}  tokens={tokens} userName={name} />
 
       <div className={`flex-1 ${bgClass} overflow-y-auto`}>
         <div className="p-6 pb-8">

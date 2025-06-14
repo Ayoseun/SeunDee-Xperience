@@ -4,9 +4,9 @@ import Header from '../components/Header';
 import TokenReward from '../components/TokenReward';
 import BottomNavigation from '../components/NavBar';
 
-const CameraPage = ({darkMode, setDarkMode}: any) => {
+const CameraPage = ({darkMode, setDarkMode,name}: any) => {
   const [tokens, setTokens] = useState(250);
-  const [userName] = useState('Guest');
+
   const [isCapturing, setIsCapturing] = useState(false);
   const [recentPhoto, setRecentPhoto] = useState(false);
   const [isCameraActive, setIsCameraActive] = useState(false);
@@ -257,7 +257,7 @@ const CameraPage = ({darkMode, setDarkMode}: any) => {
   return (
     <div className={`max-w-md mx-auto ${bgClass} min-h-screen`}>
       <TokenReward show={recentPhoto} amount={25} />
-      <Header darkMode={darkMode} setDarkMode={setDarkMode} tokens={tokens} userName={userName} />
+      <Header darkMode={darkMode} setDarkMode={setDarkMode} tokens={tokens} userName={name} />
 
       <div className={`flex-1 ${bgClass} relative overflow-y-auto`}>
         <div className="relative z-10 p-6 pb-32">

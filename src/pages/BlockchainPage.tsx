@@ -7,9 +7,9 @@ import BlockchainTx from '../components/BlockchainTx';
 
 
 
-const BlockchainPage = ({ darkMode, setDarkMode }: any) => {
+const BlockchainPage = ({ darkMode, setDarkMode,name,phoneNumber }: any) => {
   const [tokens] = useState(250);
-  const [userName] = useState('Guest');
+
   const [expandedReward, setExpandedReward] = useState(null);
   const [selectedNetwork, setSelectedNetwork] = useState('');
   const [selectedDataBundle, setSelectedDataBundle] = useState(null);
@@ -112,7 +112,7 @@ const BlockchainPage = ({ darkMode, setDarkMode }: any) => {
     setIsProcessing(true);
 
     const airtimeAmount = calculateAirtimeAmount(tokens);
-    const phoneNumber = '09078099974';
+    
 
     // VTU.ng API call for airtime purchase  
    // const apiUrl: string = `https://vtu.ng/wp-json/api/v1/airtime?username=Frank&password=123456&phone=${phoneNumber}&network_id=${networkId}&amount=${airtimeAmount}`;
@@ -129,7 +129,7 @@ const BlockchainPage = ({ darkMode, setDarkMode }: any) => {
         message: "Airtime successfully delivered",
         data: {
           network: networkId.toUpperCase(),
-          phone: phoneNumber,
+          phone: phoneNumber.toString(),
           amount: `NGN${airtimeAmount}`,
           order_id: Math.floor(Math.random() * 9999).toString()
         }
@@ -152,7 +152,7 @@ const BlockchainPage = ({ darkMode, setDarkMode }: any) => {
   const handleDataPurchase = async (bundle: any) => {
     setIsProcessing(true);
 
-    const phoneNumber = '09078099974';
+    
 
     // VTU.ng API call for data purchase
    // const apiUrl: string = `https://vtu.ng/wp-json/api/v1/data?username=Frank&password=123456&phone=${phoneNumber}&network_id=${selectedNetwork}&variation_id=${bundle.variation_id}`;
@@ -170,7 +170,7 @@ const BlockchainPage = ({ darkMode, setDarkMode }: any) => {
         data: {
           network: selectedNetwork.toUpperCase(),
           data_plan: bundle.description,
-          phone: phoneNumber,
+          phone: phoneNumber.toString(),
           amount: `NGN${bundle.nairaPrice}`,
           order_id: Math.floor(Math.random() * 9999).toString()
         }
@@ -193,7 +193,7 @@ const BlockchainPage = ({ darkMode, setDarkMode }: any) => {
 
   return (
     <div className={`max-w-md mx-auto ${bgClass} min-h-screen `}>
-      <Header darkMode={darkMode} setDarkMode={setDarkMode} tokens={tokens} userName={userName} />
+      <Header darkMode={darkMode} setDarkMode={setDarkMode} tokens={tokens} userName={name} />
 
       <div className={`flex-1 ${bgClass} overflow-y-auto`}>
         <div className="p-6 pb-8">
@@ -307,7 +307,7 @@ const BlockchainPage = ({ darkMode, setDarkMode }: any) => {
                       {/* Phone number display */}
                       <div className="mb-4 p-3 rounded-lg bg-blue-50 border border-blue-200">
                         <div className="text-sm text-blue-700">
-                          <strong>Phone Number:</strong> 09078099974
+                          <strong>Phone Number:</strong> {phoneNumber.toString()}
                         </div>
                       </div>
 

@@ -3,10 +3,9 @@ import { Camera } from 'lucide-react';
 import Header from '../components/Header';
 import BottomNavigation from '../components/NavBar';
 
-const GalleryPage = ({darkMode,setDarkMode}:any) => {
+const GalleryPage = ({darkMode,setDarkMode,name}:any) => {
   
   const [tokens] = useState(250);
-  const [userName] = useState('Guest');
 
  
 
@@ -16,7 +15,7 @@ const GalleryPage = ({darkMode,setDarkMode}:any) => {
 
   return (
     <div className={`max-w-md mx-auto ${bgClass} min-h-screen`}>
-     <Header darkMode={darkMode} setDarkMode={setDarkMode} tokens={tokens} userName={userName} />
+     <Header darkMode={darkMode} setDarkMode={setDarkMode} tokens={tokens} userName={name} />
 
       <div className={`flex-1 ${bgClass} overflow-y-auto`}>
         <div className="p-6 pb-8">

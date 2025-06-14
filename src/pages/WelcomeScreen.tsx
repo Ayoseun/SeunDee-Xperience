@@ -1,16 +1,36 @@
-import { useState } from 'react';
+
 import { useNavigate } from 'react-router-dom';
 import usImage from '../assets/Us.jpeg';
 
-const WelcomeScreen = () => {
-  const [userName, setUserName] = useState('');
+
+const WelcomeScreen = ({ setName, setPhoneNumber, name, phone }: any) => {
+
   const navigate = useNavigate();
 
   const handleNameSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (userName.trim()) {
+   
+      if (name.trim() === "") {
+        alert('Please enter your name!');
+        return
+      }
+    //check if name is number type
+      if (!isNaN(Number(name))) {
+        alert('Please enter a valid name!');
+        return
+      }
+
+      if (phone === "") {
+        alert('Please enter your phone number!');
+        return
+      }
+      if (phone.length < 11) {
+        alert('Please enter a valid phone number!');
+        return
+      }
+
       navigate('/home');
-    }
+    
   };
 
   return (
@@ -23,8 +43,16 @@ const WelcomeScreen = () => {
           <input
             type="text"
             placeholder="Enter your name"
-            value={userName}
-            onChange={(e) => setUserName(e.target.value)}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="w-full p-3 rounded-lg border border-white bg-white/20 text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-gold-500"
+          />
+
+          <input
+            type="number"
+            placeholder="Enter your phone number"
+            value={phone}
+            onChange={(e) => setPhoneNumber(e.target.value)}
             className="w-full p-3 rounded-lg border border-white bg-white/20 text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-gold-500"
           />
           <button

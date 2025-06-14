@@ -9,10 +9,10 @@ import weddingRingsImage from '../assets/ring.png';
 import BottomNavigation from '../components/NavBar';
 import Confetti from 'react-confetti';
 
-const HomePage = ({darkMode,setDarkMode}:any) => {
+const HomePage = ({darkMode,setDarkMode,name}:any) => {
   
   const [tokens, setTokens] = useState(250);
-  const [userName] = useState('Guest');
+
   const [rsvpCount] = useState(0);
   const [showConfetti, setShowConfetti] = useState(true);
   const [countdown, setCountdown] = useState('');
@@ -104,7 +104,7 @@ const HomePage = ({darkMode,setDarkMode}:any) => {
     <div className={`max-w-md mx-auto ${bgClass} min-h-screen `}>
       {/* Confetti component */}
       {showConfetti && <Confetti width={window.innerWidth} height={window.innerHeight} recycle={false} numberOfPieces={300} />}
-      <Header darkMode={darkMode} setDarkMode={setDarkMode} tokens={tokens} userName={userName} />
+      <Header darkMode={darkMode} setDarkMode={setDarkMode} tokens={tokens} userName={name} />
 
       <div className={`flex-1  ${darkMode ? 'bg-gradient-to-br from-gray-900 to-purple-900' : 'bg-gradient-to-br from-[##fffae5] to-[#f2e9c2]'} relative overflow-y-auto`}>
         <div className="absolute inset-0 opacity-10">
